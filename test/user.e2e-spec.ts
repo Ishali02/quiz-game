@@ -32,6 +32,10 @@ describe('User Controller', () => {
     token = await generateToken();
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('User submits quiz successfully - returns 200', async () => {
     const res = await request(app.getHttpServer())
       .post(

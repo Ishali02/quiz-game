@@ -6,12 +6,14 @@ export interface IAppConfig {
   environment: string;
   port: number;
   swaggerEnabled: boolean;
+  jwtSecret: string;
 }
 
 export const appConfigValidationSchema: ObjectSchema = Joi.object({
   NODE_ENV: Joi.string().required(),
   PORT: Joi.number().integer().min(1024).max(49151).optional(),
   SWAGGER_ENABLED: Joi.boolean().optional(),
+  JWT_SECRET: Joi.string().required(),
 });
 
 export class AppConfig {
@@ -28,6 +30,7 @@ export class AppConfig {
         environment: process.env.NODE_ENV as string,
         port: port,
         swaggerEnabled: process.env.SWAGGER_ENABLED === 'true',
+        jwtSecret: process.env.JWT_SECRET as string,
       };
     }
     return AppConfig._config;

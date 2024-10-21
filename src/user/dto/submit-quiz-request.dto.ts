@@ -1,11 +1,10 @@
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class SubmitQuizRequestDto {
   @IsNotEmpty({
     always: true,
     message: 'attemptNo must not be empty',
   })
-
   attemptNo: number;
 
   @IsUUID(undefined, {

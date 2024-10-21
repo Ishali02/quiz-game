@@ -1,11 +1,10 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
-import { resetDatabase } from './sql/db';
+import { closeConnection, resetDatabase } from './sql/db';
 import * as request from 'supertest';
 import { AuthService } from '../src/auth/auth.service';
 import { datasetTest } from './sql/dataset-test';
-import { QuizModule } from '../src/quiz/quiz.module';
 
 describe('QuizController', () => {
   let app: INestApplication;
@@ -30,6 +29,11 @@ describe('QuizController', () => {
     await resetDatabase();
     expect(module).toBeDefined();
     token = await generateToken();
+  });
+
+  afterAll(async () => {
+    closeConnection();
+    await app.close();
   });
 
   it('Get All Quizzes - Return 200 with  correct auth token', async () => {

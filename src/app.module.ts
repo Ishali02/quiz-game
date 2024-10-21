@@ -7,9 +7,8 @@ import { TypeormConfigurationService } from './db/typeorm-configuration.service'
 import { DatabaseModule } from './db/database.module';
 import { QuizModule } from './quiz/quiz.module';
 import { UserModule } from './user/user.module';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './filters/exception.filter';
-import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -22,10 +21,6 @@ import { AuthModule } from './auth/auth.module';
     DatabaseModule,
     QuizModule,
     UserModule,
-    JwtModule.register({
-      secret: 'your-secret-key', // Replace with your secret key
-      signOptions: { expiresIn: '1h' }, // Token expiration time
-    }),
     AuthModule,
   ],
   controllers: [AppController],

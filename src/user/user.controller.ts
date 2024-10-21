@@ -6,11 +6,13 @@ import {
   Logger,
   Param,
   Post,
-  Put, UseGuards,
+  Put,
+  UseGuards,
 } from '@nestjs/common';
 import { getUserIdFromHeaders, Routes } from '../shared/constants';
 import {
-  ApiAcceptedResponse, ApiBearerAuth,
+  ApiAcceptedResponse,
+  ApiBearerAuth,
   ApiInternalServerErrorResponse,
   ApiOperation,
   ApiParam,

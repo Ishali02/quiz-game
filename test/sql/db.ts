@@ -28,3 +28,5 @@ export const resetDatabase = async () => {
   await execSqlFromFile('./test/sql/clean-db.sql');
   await execSqlFromFile('./test/sql/init-db.sql');
 };
+
+export const closeConnection = () => db.end();

@@ -74,7 +74,7 @@ export class UserService {
     if (quizDetails.status === UserAttemptStatusEnum.COMPLETED) {
       this.logger.error(`Quiz is already submitted`);
       throw new UnprocessableEntityException(
-        'Quiz cannot be saved after submitting',
+        'Quiz cannot be saved/submitted after submitting',
       );
     }
   }

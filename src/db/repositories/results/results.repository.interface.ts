@@ -20,7 +20,7 @@ export interface IResultsRepository {
     attemptNo: number,
   ): Promise<UserAttempt>;
 
-  submitResultOfQuizForUser(
+  submitQuizForUser(
     params: SubmitQuizRequestDto,
     userId: string,
   ): Promise<SubmitQuizResponse>;

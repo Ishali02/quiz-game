@@ -43,11 +43,11 @@ export class UserController {
   @ApiParam({ name: 'quizId', type: String, required: true })
   @ApiParam({ name: 'attemptNo', type: Number, required: true })
   @HttpCode(HttpStatus.OK)
-  public async getResultOfQuizForUser(
+  public async submitQuizForUser(
     @Param() params: SubmitQuizRequestDto,
     @getUserIdFromHeaders() userId: string,
   ): Promise<SubmitQuizResponse> {
-    return await this.userService.getResultOfQuizForUser(params, userId);
+    return await this.userService.submitQuizForUser(params, userId);
   }
 
   @Put('/result/quiz/:quizId/attempt/:attemptNo/save')

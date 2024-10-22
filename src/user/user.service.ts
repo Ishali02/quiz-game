@@ -30,11 +30,13 @@ export class UserService {
     private userRepository: IUserRepository,
   ) {}
 
-  public async getResultOfQuizForUser(
+  public async submitQuizForUser(
     params: SubmitQuizRequestDto,
     userId: string,
   ): Promise<SubmitQuizResponse> {
-    return await this.resultsRepository.submitResultOfQuizForUser(
+    this.logger.log(`Saving Quiz..`);
+    await this.validateQuizIsSubmitted(params, userId);
+    return await this.resultsRepository.submitQuizForUser(
       params,
       userId,
     );
@@ -62,6 +64,11 @@ export class UserService {
     params: SubmitQuizRequestDto,
     userId: string,
   ): Promise<void> {
+    this.logger.log(`Saving Quiz..`);
+    await this.validateQuizIsSubmitted(params, userId);
+    return await this.resultsRepository.saveQuizForUser(params, userId);
+  }
+  private async validateQuizIsSubmitted(params: SubmitQuizRequestDto, userId: string): Promise<void> {
     const quizDetails: UserAttempt =
       await this.resultsRepository.getUserQuizDetails(params, userId);
     if (quizDetails.status === UserAttemptStatusEnum.COMPLETED) {
@@ -70,9 +77,7 @@ export class UserService {
         'Quiz cannot be saved after submitting',
       );
     }
-    return await this.resultsRepository.saveQuizForUser(params, userId);
   }
-
   public async create(user: UserDetails): Promise<User> {
     return await this.userRepository.createUser(user);
   }

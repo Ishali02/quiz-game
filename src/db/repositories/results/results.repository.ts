@@ -84,7 +84,7 @@ export class ResultsRepository
     return await this.updateResult(quizId, userId, updateData, attemptNo);
   }
 
-  public async submitResultOfQuizForUser(
+  public async submitQuizForUser(
     params: SubmitQuizRequestDto,
     userId: string,
   ): Promise<SubmitQuizResponse> {

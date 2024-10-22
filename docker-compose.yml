@@ -12,7 +12,6 @@ services:
       - '5432:5432'
     volumes:
       - ./init_script.sql:/docker-entrypoint-initdb.d/init_script.sql:ro  # Moved to initdb folder
-      - ./initdb.sh:/docker-entrypoint-initdb.d/initdb.sh:ro
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s

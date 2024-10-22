@@ -138,7 +138,7 @@ export class ResultsRepository
         this.logger.error(
           `Quiz: ${params.quizId} details not found for user: ${userId}`,
         );
-        throw new NotFoundException('Quiz details not found');
+        throw new NotFoundException('Quiz not found');
       }
       throw new InternalServerErrorException('Internal server error occurred');
     }
@@ -181,8 +181,8 @@ export class ResultsRepository
       .execute();
 
     if (result.affected === 0) {
-      this.logger.error(`Quiz result for user: ${userId} was not found`);
-      throw new NotFoundException('User result not found');
+      this.logger.error(`Quiz: ${quizId} result for user: ${userId} was not found`);
+      throw new NotFoundException('Quiz not found');
     }
 
     // Return the updated entity from the result

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsUUID, Max, Min } from 'class-validator';
 import { GetQuizPathParamsDto } from './create-quiz.request.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -17,6 +17,8 @@ export class questionPathParamsDto extends GetQuizPathParamsDto {
 export class QuestionBodyDto {
   @IsNumber()
   @ApiProperty({ required: true })
+  @Min(1)
+  @Max(4)
   selectedOption: number;
 
   @IsNumber()

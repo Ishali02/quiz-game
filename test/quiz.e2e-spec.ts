@@ -32,7 +32,6 @@ describe('QuizController', () => {
   });
 
   afterAll(async () => {
-    closeConnection();
     await app.close();
   });
 
@@ -187,5 +186,48 @@ describe('QuizController', () => {
         .send({ selectedOption: 2, attemptNo: 1 })
         .expect(403);
     });
+  });
+
+  it('User submits quiz successfully - returns 200', async () => {
+    const res = await request(app.getHttpServer())
+      .post(
+        `/quiz-game/user/result/quiz/${datasetTest.quiz[0].id}/attempt/1/submit`,
+      )
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+    expect(res.body.hasOwnProperty('quizId')).toBe(true);
+    expect(res.body.hasOwnProperty('userId')).toBe(true);
+    expect(res.body.hasOwnProperty('score')).toBe(true);
+    expect(res.body.hasOwnProperty('answers')).toBe(true);
+  });
+
+  it('User submits quiz - Returns 400 for invalid quiz', async () => {
+    await request(app.getHttpServer())
+      .post(`/quiz-game/user/result/quiz/quiz123/attempt/1/submit`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(400);
+  });
+  it('User submits quiz - Returns 401 for missing token', async () => {
+    await request(app.getHttpServer())
+      .post(
+        `/quiz-game/user/result/quiz/${datasetTest.quiz[0].id}/attempt/1/submit`,
+      )
+      .expect(401);
+  });
+  it('User submits quiz - Returns 404 for invalid attemptNo', async () => {
+    await request(app.getHttpServer())
+      .post(
+        `/quiz-game/user/result/quiz/${datasetTest.quiz[0].id}/attempt/4/submit`,
+      )
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404);
+  });
+  it('User submits quiz - Returns 404 for invalid quiz', async () => {
+    await request(app.getHttpServer())
+      .post(
+        `/quiz-game/user/result/quiz/111e8400-e29b-41d4-a716-446655440003/attempt/1/submit`,
+      )
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404);
   });
 });
